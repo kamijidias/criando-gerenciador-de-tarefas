@@ -8,7 +8,7 @@ import AtualizarTarefa from './atualizar/atualizar-tarefa';
 const routes = {
   '/': () => <ListarTarefas />,
   '/cadastrar': () => <CadastrarTarefa />,
-  '/atualizar/:id': ({ id }) => <AtualizarTarefa id={id} />
+  '/atualizar/:id': ({id}) => <AtualizarTarefa id={id} />
 };
 
 function GerenciadorTarefas() {

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RemoverTarefa from './remover-tarefa';
+import ConcluirTarefa from './concluir-tarefa';
 import Tarefa from '../models/tarefa.model';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-describe('Teste do componente de remoção de tarefas', () => {
+describe('Teste do componente de conclusão de tarefas', () => {
 
   const nomeTarefa = 'Tarefa de teste';
   const tarefa = new Tarefa(1, nomeTarefa, false);
@@ -13,7 +13,7 @@ describe('Teste do componente de remoção de tarefas', () => {
   it('deve renderizar o componente sem erros', () => {
     const div = document.createElement('div');
     ReactDOM.render(
-      <RemoverTarefa
+      <ConcluirTarefa
         tarefa={tarefa}
         recarregarTarefas={() => false} />, div);
     ReactDOM.unmountComponentAtNode(div);
@@ -21,7 +21,7 @@ describe('Teste do componente de remoção de tarefas', () => {
 
   it('deve exibir a modal', () => {
     const { getByTestId } = render(
-      <RemoverTarefa
+      <ConcluirTarefa
         tarefa={tarefa}
         recarregarTarefas={() => false} />
     );
@@ -29,17 +29,17 @@ describe('Teste do componente de remoção de tarefas', () => {
     expect(getByTestId('modal')).toHaveTextContent(nomeTarefa);
   });
 
-  it('deve remover uma tarefa', () => {
+  it('deve concluir uma tarefa', () => {
     localStorage['tarefas'] = JSON.stringify([tarefa]);
     const { getByTestId } = render(
-      <RemoverTarefa
+      <ConcluirTarefa
         tarefa={tarefa}
         recarregarTarefas={() => false} />
     );
     fireEvent.click(getByTestId('btn-abrir-modal'));
-    fireEvent.click(getByTestId('btn-remover'));
+    fireEvent.click(getByTestId('btn-concluir'));
     const tarefasDb = JSON.parse(localStorage['tarefas']);
-    expect(tarefasDb.length).toBe(0);
+    expect(tarefasDb[0].concluida).toBeTruthy();
   });
 
 });
